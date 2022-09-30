@@ -12,16 +12,16 @@ def csv_to_list(filename: str) -> list:
 
 def write_csv(report: list, filename: str):
     """Запись двумерного списка в табличном виде в csv-файл"""
-    f = open(filename, 'w', encoding='utf8')
-    for element in report:
-        line = ';'.join(element)
-        f.write(f'{line}\n')
+    with open(filename, 'w', encoding='utf8') as file:
+        for element in report:
+            line = ';'.join(element)
+            file.write(f'{line}\n')
 
 
 def print_array_as_a_table(input_data: list,
                            distance: int = 10,
                            head_sep: str = '-',
-                           column_sep: str = ''
+                           column_sep: str = '|'
                            ) -> None:
     """
     Печать в консоль думерного списка в читаемом виде
@@ -92,11 +92,16 @@ def transform_dict_to_array(input_dict: dict) -> list:
 def department_teams(departments: list, teams: list) -> dict:
     """Создание словаря Департамент -> Список команд, входящих в него"""
     result = {}
-    for i in range(len(departments)):
-        if departments[i] in result.keys():
-            result[departments[i]].append(teams[i])
+    #   for i in range(len(departments)):
+    #       if departments[i] in result.keys():
+    #           result[departments[i]].append(teams[i])
+    #       else:
+    #           result[departments[i]] = [teams[i]]
+    for element in zip(departments, teams):
+        if element[0] in result.keys():
+            result[element[0]].append(element[1])
         else:
-            result[departments[i]] = [teams[i]]
+            result[element[0]] = [element[1]]
     for key, value in result.items():
         result[key] = list(set(value))
     return result
@@ -109,11 +114,16 @@ def department_salaries(departments: list, salaries: list) -> list:
     """
     header = [['Департамент', 'Численность', 'Вилка', 'Средняя зп']]
     salary_dict = {}
-    for i in range(len(departments)):
-        if departments[i] in salary_dict.keys():
-            salary_dict[departments[i]].append(int(salaries[i]))
+    #   for i in range(len(departments)):
+    #       if departments[i] in salary_dict.keys():
+    #           salary_dict[departments[i]].append(int(salaries[i]))
+    #       else:
+    #           salary_dict[departments[i]] = [int(salaries[i])]
+    for element in zip(departments, salaries):
+        if element[0] in salary_dict.keys():
+            salary_dict[element[0]].append(int(element[1]))
         else:
-            salary_dict[departments[i]] = [int(salaries[i])]
+            salary_dict[element[0]] = [int(element[1])]
     for key, value in salary_dict.items():
         salary_dict[key] = [str(len(value)),
                             str(min(value)) + ' - ' + str(max(value)),
