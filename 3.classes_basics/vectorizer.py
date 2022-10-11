@@ -1,8 +1,9 @@
 # Реализация класса CountVectorizer
 
 class CountVectorizer:
-    def __init__(self, words=None):
-        self.words = words
+    """Создает для набора строк терм-документальную матрицу"""
+    def __init__(self):
+        self.words = None
 
     @staticmethod
     def find_array_of_words(text):
