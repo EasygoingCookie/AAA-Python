@@ -1,4 +1,6 @@
 # Реализация класса CountVectorizer
+from collections import defaultdict
+
 
 class CountVectorizer:
     """Создает для набора строк терм-документальную матрицу"""
@@ -33,17 +35,13 @@ class CountVectorizer:
         self.words = self.find_array_of_words(text)
         term_matrix = []
         for sentence in text:
-            frequency_dict = {}
             elements = [word.lower() for word in sentence.split()]
-            set_elem = set(elements)
+            frequency_dict = defaultdict(int)
             for element in elements:
-                frequency_dict[element] = frequency_dict.get(element, 0) + 1
+                frequency_dict[element] += 1
             sentence_array = []
             for word in self.words:
-                if word in set_elem:
-                    sentence_array.append(frequency_dict[word])
-                else:
-                    sentence_array.append(0)
+                sentence_array.append(frequency_dict[word])
             term_matrix.append(sentence_array)
         return term_matrix
 
