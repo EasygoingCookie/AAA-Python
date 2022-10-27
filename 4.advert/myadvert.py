@@ -5,7 +5,7 @@ import functools
 
 
 class JsonToPyobject:
-    """From json to python object"""
+    """Converts dict from json to python object"""
     def __init__(self, json_object: dict):
         for key, value in json_object.items():
             if iskeyword(key):
@@ -17,7 +17,7 @@ class JsonToPyobject:
 
 
 class ColorizeMixin:
-    """"""
+    """Replaces repr, which colors text in yellow"""
     def __init_subclass__(cls, *args, **kwargs):
         super().__init_subclass__(*args, **kwargs)
         cls.__repr__ = cls._replace_repr(cls.__repr__)
@@ -32,7 +32,7 @@ class ColorizeMixin:
 
 
 class Advert(ColorizeMixin, JsonToPyobject):
-    """My advert"""
+    """Creates attributes of class from json's attributes dinamicly"""
     repr_color = 33
 
     def __init__(self, json_object: dict):
@@ -53,8 +53,7 @@ if __name__ == '__main__':
                     "title": "Вельш-корги",
                     "price": 1000,
                     "class": "dogs",
-                    "location": {
-                        "address": "сельское поселение Ельдигинское, поселок санатория Тишково, 25"
+                    "location": { "address": "сельское поселение Ельдигинское, поселок санатория Тишково, 25"
                     }
                 }"""
     corgi_info_loads = json.loads(corgi_info)
